@@ -1,44 +1,532 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Our Love Space</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Modules Dashboard</title>
+    <!-- Tag penghubung ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="hero">
-<div class="overlay"></div>
-<div class="content">
-<h1>GUFRON ❤️ SAYANG</h1>
-<p>Semesta memang luas, tapi anehnya aku selalu pulang ke kamu.</p>
-<a href="#timeline" class="btn">💌 Buka Cerita Kita</a>
-</div>
-</div>
 
-<section class="stats">
-<div class="card"><h2 id="days">144</h2><span>Hari Bersama</span></div>
-<div class="card"><h2>12341</h2><span>Pesan</span></div>
-<div class="card"><h2>45</h2><span>Video Call</span></div>
-<div class="card"><h2>8</h2><span>Kota</span></div>
-</section>
+    <nav>
+        <button class="nav-btn active" onclick="switchPage(event, 'dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" onclick="switchPage(event, 'logsPage')">📝 Form Harian</button>
+        <button class="nav-btn" onclick="switchPage(event, 'input')">⚙️ Database Utama</button>
+        <button class="nav-btn" onclick="switchPage(event, 'links')">🔗 Dokumen Links</button>
+    </nav>
 
-<section id="timeline" class="section">
-<h2>Timeline Kita</h2>
-<ul>
-<li>12 Januari 2026 — Pertama Chat</li>
-<li>5 Februari 2026 — Pertama Ketemu</li>
-<li>14 Februari 2026 — Jadian</li>
-<li>20 April 2026 — Liburan Pertama</li>
-</ul>
-</section>
+    <div class="container">
+        <div id="dashboard" class="page active">
+            <h1>Progress MCU Apps Fakultas Kedokteran</h1>
+            <p class="subtitle">Data real-time progress penyusunan materi dan input aplikasi.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h2>Daftar Masalah (DM)</h2>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Materi</span><span id="dm-materi-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dm-materi-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dm-materi-text">0 / 0</small>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Input Apps</span><span id="dm-apps-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dm-apps-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dm-apps-text">0 / 0</small>
+                    </div>
+                </div>
 
-<section class="section">
-<h2>Surat Untuk Kamu</h2>
-<div class="letter">Aku mungkin tidak selalu sempurna, tapi aku selalu memilih kamu.</div>
-</section>
+                <div class="card">
+                    <h2>Daftar Penyakit (DP)</h2>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Materi</span><span id="dp-materi-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dp-materi-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dp-materi-text">0 / 0</small>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Input Apps</span><span id="dp-apps-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dp-apps-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dp-apps-text">0 / 0</small>
+                    </div>
+                </div>
 
-<script src="script.js"></script>
+                <div class="card">
+                    <h2>Keterampilan Klinis (DKK)</h2>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Materi</span><span id="dkk-materi-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dkk-materi-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dkk-materi-text">0 / 0</small>
+                    </div>
+                    <div class="progress-wrapper">
+                        <div class="progress-header"><span>Input Apps</span><span id="dkk-apps-pct">0%</span></div>
+                        <div class="progress-bar"><div id="dkk-apps-bar" class="progress-fill" style="width: 0%"></div></div>
+                        <small style="color: var(--text-muted)" id="dkk-apps-text">0 / 0</small>
+                    </div>
+                </div>
+            </div>
+
+           <div class="card">
+                <h2>Total Data MCU Apps Fakultas Kedoteran</h2>
+                <div class="grid" style="margin-bottom:0;">
+                    <!-- DM Info -->
+                    <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px; text-align: center;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: var(--primary);">Daftar Masalah</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">10</span><small style="color: var(--text-muted);">Sistem</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">206</span><small style="color: var(--text-muted);">Bab</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">1.854</span><small style="color: var(--text-muted);">Sub-bab</small></div>
+                        </div>
+                    </div>
+                    <!-- DP Info -->
+                    <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px; text-align: center;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: var(--primary);">Daftar Penyakit</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">13</span><small style="color: var(--text-muted);">Sistem</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">104</span><small style="color: var(--text-muted);">Bab</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">736</span><small style="color: var(--text-muted);">Sub-bab</small></div>
+                        </div>
+                    </div>
+                    <!-- DKK Info -->
+                    <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px; text-align: center;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: var(--primary);">Keterampilan Klinis</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">12</span><small style="color: var(--text-muted);">Sistem</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">52</span><small style="color: var(--text-muted);">Bab</small></div>
+                            <div><span style="display: block; font-weight: bold; font-size: 1.125rem; color: var(--text-main);">480</span><small style="color: var(--text-muted);">Sub-bab</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Form Harian Page -->
+        <div id="logsPage" class="page">
+            <h1>Form Laporan Harian</h1>
+            <p class="subtitle">Rekapan progres kinerja tim secara berkala. Setiap data yang dimasukan akan tersimpan ke database.</p>
+            
+            <div class="split-layout">
+                <div class="card" style="height: fit-content;">
+                    <h2>Tambah Log Baru</h2>
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Nama Anggota</label>
+                    <select id="logName">
+                        <option value="Hilfi">Hilfi</option>
+                        <option value="Raka">Raka</option>
+                        <option value="Fahira">Fahira</option>
+                        <option value="Okta">Okta</option>
+                        <option value="Wafa">Wafa</option>
+                        <option value="Jannah">Jannah</option>
+                        <option value="Jannah">Araya</option>
+                        <option value="Jannah">Yolanda</option>
+                        <option value="Jannah">Candy</option>
+                        <option value="Jannah">Nazila</option>
+                        <option value="Jannah">Belva</option>
+                        <option value="Jannah">Azwa</option>
+                    </select>
+
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Kategori Modul</label>
+                    <select id="logCategory">
+                        <option value="DM">Daftar Masalah (DM)</option>
+                        <option value="DP">Daftar Penyakit (DP)</option>
+                        <option value="DKK">Keterampilan Klinis (DKK)</option>
+                    </select>
+
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Tipe Pekerjaan</label>
+                    <select id="logType">
+                        <option value="materi">Menyusun Materi</option>
+                        <option value="apps">Input Apps</option>
+                    </select>
+
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Jumlah Sub-bab Selesai</label>
+                    <input type="number" id="logCount" min="1" value="1" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; margin-bottom: 1rem; background-color: #f8fafc;">
+
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Tanggal Aktivitas</label>
+                    <input type="date" id="logManualDate" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; margin-bottom: 1rem; background-color: #f8fafc;">
+
+                    <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Laporan Aktivitas (Teks Bebas)</label>
+                    <textarea id="logActivity" style="height: 100px;" placeholder="Contoh: Menyusun materi DKK - Sistem Reproduksi - Bab 2 - Sub Bab 47"></textarea>
+                    
+                    <button class="btn btn-success" onclick="submitLog()">➕ Simpan Laporan</button>
+                </div>
+
+                <!-- Card 2: Bulk Import Catatan Tim -->
+                <div class="card" style="height: fit-content; margin-bottom: 0;">
+                    <h2>⚡ Bulk Import Catatan Tim</h2>
+                    <p style="font-size: 0.8rem; margin-bottom: 0.75rem; color: var(--text-muted);">
+                        Salin dan tempel tulisan rekapan harian langsung dari memo/WhatsApp ke sini. Sistem otomatis mendeteksi nama, tanggal, tugas, dan mengupdate dashboard!
+                    </p>
+                    <textarea id="bulkTextImport" style="height: 120px; font-size: 0.85rem;" placeholder="Tempel teks di sini..."></textarea>
+                    <button class="btn btn-primary" onclick="bulkParseLogs()" style="width: 100%; background-color: var(--primary);">⚡ Jalankan Smart Parser</button>
+                </div>
+            </div>
+
+            <!-- KOLOM KANAN: Timeline Aktivitas Tim -->
+            <div class="card" style="height: 850px; display: flex; flex-direction: column;">
+                <h2>Timeline Aktivitas Tim</h2>
+                <input type="text" id="logSearch" placeholder="🔍 Cari nama anggota atau detail aktivitas tim..." oninput="searchLogs()" style="margin-bottom: 1rem;">
+                
+                <div class="timeline" id="timelineContainer" style="overflow-y: auto; flex: 1; padding: 0.5rem 1rem 0.5rem 2.5rem; margin-left: -2rem; margin-top: 0.5rem;">
+                    <!-- Logs akan di-render di sini via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div id="input" class="page">
+            <div class="card">
+                <h1>Database Utama</h1>
+                <p class="subtitle">Database Utama Tim Akademik.</p>
+                
+                <textarea id="jsonInput"></textarea>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="saveJSON()">💾 Update & Simpan Data</button>
+                    <button class="btn btn-secondary" onclick="exportJSON()">⬇️ Export File JSON</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('fileUpload').click()">⬆️ Import File JSON</button>
+                    <input type="file" id="fileUpload" accept=".json" style="display: none;" onchange="importJSON(event)">
+                </div>
+            </div>
+        </div>
+
+        <div id="links" class="page">
+            <h1>Master Data Repository</h1>
+            <p class="subtitle">Akses cepat ke Google Docs materi pembelajaran tim.</p>
+            
+            <div class="grid">
+                <a href="https://docs.google.com/document/d/1WOktkB4NiR9Sc_qN6sFNvKkhElkjhcCQ/edit?usp=sharing&ouid=108212119313879951025&rtpof=true&sd=true" target="_blank" class="card link-card">
+                    <div class="link-icon">🩺</div>
+                    <h2>Keterampilan Klinis</h2>
+                </a>
+                <a href="https://docs.google.com/document/d/1gQXQMq4D7TKiKUGrK6GpqNBL-SYUWV9G/edit?usp=drive_link&ouid=108212119313879951025&rtpof=true&sd=true" target="_blank" class="card link-card">
+                    <div class="link-icon">📋</div>
+                    <h2>Daftar Masalah</h2>
+                </a>
+                <a href="https://docs.google.com/document/d/1v2skg5b4Kvk980CFsRoGqbxAVHRzxzje/edit?usp=drive_link&ouid=108212119313879951025&rtpof=true&sd=true" target="_blank" class="card link-card">
+                    <div class="link-icon">🦠</div>
+                    <h2>Daftar Penyakit</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Data Berhasil Diupdate!</div>
+
+    <script>
+        // Updated Default Data Structure with Logs
+        const defaultData = {
+            "progress": {
+                "DM": {
+                    "materi": { "done": 1728, "total": 1854 },
+                    "apps": { "done": 1404, "total": 1854 }
+                },
+                "DP": {
+                    "materi": { "done": 583, "total": 736 },
+                    "apps": { "done": 472, "total": 736 }
+                },
+                "DKK": {
+                    "materi": { "done": 383, "total": 480 },
+                    "apps": { "done": 283, "total": 480 }
+                }
+            },
+            "logs": [
+                {
+                    "name": "Hilfi",
+                    "date": "30/06/2026",
+                    "timestamp": 1782798000000,
+                    "activity": "Menyusun materi DKK - Sistem Reproduksi - Bab 2 - Sub Bab 46"
+                },
+                {
+                    "name": "Raka",
+                    "date": "30/06/2026",
+                    "timestamp": 1782797000000,
+                    "activity": "Menyusun materi DP - Sistem Muskuloskeletal - Bab 1 - Sub Bab 7"
+                },
+                {
+                    "name": "Fahira",
+                    "date": "30/06/2026",
+                    "timestamp": 1782796000000,
+                    "activity": "Menyusun materi DKK - Sistem Muskuloskeletal - Bab 1 - Sub Bab 17"
+                }
+            ]
+        };
+
+        let appData = {};
+
+        // Core Initialization
+        function initApp() {
+            let savedData = localStorage.getItem('medicalModuleProgress');
+            appData = savedData ? JSON.parse(savedData) : defaultData;
+            
+            // Ensure old data structures are migrated to new one
+            if (!appData.progress) {
+                appData = { progress: appData, logs: [] };
+            }
+
+            refreshAllUI();
+            // Set default tanggal input ke hari ini
+            document.getElementById('logManualDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        // UI Refresh
+        function refreshAllUI() {
+            document.getElementById('jsonInput').value = JSON.stringify(appData, null, 4);
+            updateDashboard(appData.progress);
+            renderTimeline(appData.logs);
+        }
+
+        // Update Dashboard Cards
+        function updateDashboard(progressData) {
+            const categories = ['DM', 'DP', 'DKK'];
+            const types = ['materi', 'apps'];
+
+            categories.forEach(cat => {
+                types.forEach(type => {
+                    let done = progressData[cat][type].done;
+                    let total = progressData[cat][type].total;
+                    let pct = Math.round((done / total) * 100) || 0;
+
+                    document.getElementById(`${cat.toLowerCase()}-${type}-bar`).style.width = `${pct}%`;
+                    document.getElementById(`${cat.toLowerCase()}-${type}-pct`).innerText = `${pct}%`;
+                    document.getElementById(`${cat.toLowerCase()}-${type}-text`).innerText = `${done} / ${total} Sub-bab`;
+                });
+            });
+        }
+
+        // Render Timeline Logs
+        function renderTimeline(logsData) {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+
+            if (!logsData || logsData.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); font-style:italic;">Belum ada log aktivitas tim.</p>';
+                return;
+            }
+
+            const sortedLogs = [...logsData].sort((a, b) => b.timestamp - a.timestamp);
+
+            const groupedLogs = {};
+            sortedLogs.forEach(log => {
+                if (!groupedLogs[log.date]) {
+                    groupedLogs[log.date] = [];
+                }
+                groupedLogs[log.date].push(log);
+            });
+
+            for (const date in groupedLogs) {
+                container.innerHTML += `<div style="margin: 1.5rem 0 1rem -1.2rem; background: #e2e8f0; padding: 0.3rem 1rem; border-radius: 20px; display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); border: 2px solid white; position: relative; z-index: 2;">🗓️ ${date}</div>`;
+
+                groupedLogs[date].forEach(log => {
+                    let colorClass = log.name === 'Hilfi' ? '#3b82f6' : log.name === 'Fahira' ? '#8b5cf6' : '#f59e0b';
+
+                    let itemHTML = `
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background-color: ${colorClass}; box-shadow: 0 0 0 2px ${colorClass};"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-header" style="align-items: center; justify-content: space-between;">
+                                    <span class="timeline-name" style="color: ${colorClass}">${log.name}</span>
+                                    <button onclick="deleteLog('${log.id}')" style="background:none; border:none; cursor:pointer; font-size:0.9rem; opacity:0.5; transition:0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'" title="Hapus laporan ini">❌</button>
+                                </div>
+                                <div class="timeline-text" style="white-space: pre-line; line-height: 1.6; margin-top: 0.25rem;">${log.activity}</div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += itemHTML;
+                });
+            }
+        }
+
+        function deleteLog(id) {
+            let konfirmasi = confirm("Yakin mau hapus laporan ini? Data yang dihapus nggak bisa balik lagi lho.");
+            if (konfirmasi) {
+                appData.logs = appData.logs.filter(log => log.id !== id);
+                persistData();
+                showToast("Log berhasil dihapus!");
+            }
+        }
+
+        function submitLog() {
+            const name = document.getElementById('logName').value;
+            const category = document.getElementById('logCategory').value;
+            const type = document.getElementById('logType').value;
+            const count = parseInt(document.getElementById('logCount').value) || 0;
+            const activity = document.getElementById('logActivity').value;
+            const manualDateVal = document.getElementById('logManualDate').value;
+
+            if (count <= 0) { alert("Jumlah sub-bab yang beres harus minimal 1!"); return; }
+            if (!activity.trim()) { alert("Laporan aktivitas tidak boleh kosong!"); return; }
+            if (!manualDateVal) { alert("Tanggal aktivitas harus diisi!"); return; }
+
+            let currentTarget = appData.progress[category][type];
+            if (currentTarget.done + count <= currentTarget.total) {
+                currentTarget.done += count;
+            } else {
+                currentTarget.done = currentTarget.total;
+            }
+
+            const [year, month, day] = manualDateVal.split('-').map(Number);
+            const parsedDate = new Date(year, month - 1, day);
+            const dateString = parsedDate.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            
+            const now = new Date();
+            parsedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+            const timestamp = parsedDate.getTime();
+
+            const logId = crypto.randomUUID ? crypto.randomUUID() : 'id-' + timestamp + '-' + Math.random().toString(36).substr(2, 9);
+
+            const newLog = {
+                id: logId,
+                name: name,
+                date: dateString,
+                timestamp: timestamp,
+                activity: activity.trim()
+            };
+
+            appData.logs.push(newLog);
+            persistData();
+            
+            document.getElementById('logActivity').value = '';
+            document.getElementById('logCount').value = '1';
+            document.getElementById('logManualDate').value = new Date().toISOString().split('T')[0];
+            showToast("Log disimpan & Dashboard otomatis ter-update!");
+        }
+
+        function saveJSON() {
+            try {
+                let inputVal = document.getElementById('jsonInput').value;
+                appData = JSON.parse(inputVal);
+                persistData();
+                showToast("JSON berhasil divalidasi & disimpan!");
+            } catch (e) {
+                alert("Format JSON tidak valid! Pastikan tanda kutip dan koma sudah benar.");
+            }
+        }
+
+        function exportJSON() {
+            let inputVal = document.getElementById('jsonInput').value;
+            let blob = new Blob([inputVal], { type: "application/json" });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = `Progress_Tim_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importJSON(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    appData = JSON.parse(e.target.result);
+                    persistData();
+                    document.getElementById('fileUpload').value = "";
+                    showToast("Data tim berhasil di-import!");
+                } catch (err) {
+                    alert("File JSON rusak atau tidak valid.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function searchLogs() {
+            const keyword = document.getElementById('logSearch').value.toLowerCase();
+            const filteredLogs = appData.logs.filter(log => 
+                log.name.toLowerCase().includes(keyword) || 
+                log.activity.toLowerCase().includes(keyword)
+            );
+            renderTimeline(filteredLogs);
+        }
+
+        function bulkParseLogs() {
+            const rawText = document.getElementById('bulkTextImport').value;
+            if (!rawText.trim()) { alert("Kolom catatan kosong, Bro!"); return; }
+
+            const lines = rawText.split('\n');
+            let currentName = '';
+            let currentDateStr = '';
+            let currentActivities = [];
+            let addedBlockCount = 0;
+            const today = new Date();
+
+            function saveCurrentBlock() {
+                if (currentName && currentDateStr && currentActivities.length > 0) {
+                    const dateMatch = currentDateStr.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+                    if (!dateMatch) return;
+                    
+                    const [_, d, m, y] = dateMatch.map(Number);
+                    const parsedDate = new Date(y, m - 1, d);
+
+                    const cleanActivityText = currentActivities.join('\n');
+                    
+                    parsedDate.setHours(today.getHours(), today.getMinutes(), today.getSeconds());
+                    const finalTimestamp = parsedDate.getTime() + (addedBlockCount * 1000);
+                    const formattedDisplayDate = parsedDate.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    const uniqueId = crypto.randomUUID ? crypto.randomUUID() : 'bulk-' + finalTimestamp + '-' + Math.random().toString(36).substr(2, 4);
+
+                    appData.logs.push({
+                        id: uniqueId,
+                        name: currentName,
+                        date: formattedDisplayDate,
+                        timestamp: finalTimestamp,
+                        activity: cleanActivityText
+                    });
+
+                    addedBlockCount++;
+                }
+            }
+
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed) return;
+
+                const headerMatch = trimmed.match(/^([A-Za-z]+)\s*\([^)]*(\d{2}\/\d{2}\/\d{4})[^)]*\)/);
+
+                if (headerMatch) {
+                    saveCurrentBlock();
+                    currentName = headerMatch[1];
+                    currentDateStr = headerMatch[2];
+                    currentActivities = [];
+                } else if (trimmed.startsWith('•') || trimmed.startsWith('-') || trimmed.startsWith('*')) {
+                    const taskDetail = trimmed.replace(/^[•\-*]\s*/, '');
+                    currentActivities.push(taskDetail);
+                } else if (currentName && currentDateStr) {
+                    currentActivities.push(trimmed);
+                }
+            });
+
+            saveCurrentBlock();
+
+            if (addedBlockCount > 0) {
+                persistData();
+                document.getElementById('bulkTextImport').value = '';
+                showToast(`Sukses memproses masal ${addedBlockCount} catatan tim!`);
+            } else {
+                alert("Format teks tidak dikenali, Bro. Pastikan ada baris: Nama (Hari, DD/MM/YYYY) di atas daftarnya.");
+            }
+        }
+
+        function persistData() {
+            localStorage.setItem('medicalModuleProgress', JSON.stringify(appData));
+            refreshAllUI();
+        }
+
+        function switchPage(e, pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            e.currentTarget.classList.add('active');
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        window.onload = initApp;
+    </script>
 </body>
 </html>
