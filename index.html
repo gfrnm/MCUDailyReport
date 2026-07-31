@@ -10,10 +10,11 @@
 <body>
 
     <nav>
-        <button class="nav-btn active" onclick="switchPage(event, 'dashboard')">📊 Dashboard</button>
-        <button class="nav-btn" onclick="switchPage(event, 'logsPage')">📝 Form Harian</button>
-        <button class="nav-btn" onclick="switchPage(event, 'input')">⚙️ Database Utama</button>
-        <button class="nav-btn" onclick="switchPage(event, 'links')">🔗 Dokumen Links</button>
+    <button class="nav-btn active" onclick="switchPage(event, 'dashboard')">📊 Dashboard</button>
+    <button class="nav-btn" onclick="switchPage(event, 'detailProgress')">📑 Detail Progress</button>
+    <button class="nav-btn" onclick="switchPage(event, 'logsPage')">📝 Form Harian</button>
+    <button class="nav-btn" onclick="switchPage(event, 'input')">⚙️ Database Utama</button>
+    <button class="nav-btn" onclick="switchPage(event, 'links')">🔗 Dokumen Links</button>
     </nav>
 
     <div class="container">
@@ -98,7 +99,23 @@
                 </div>
             </div>
         </div>
+<!-- Halaman Detail Progress Per Sistem -->
+<div id="detailProgress" class="page">
+    <h1>Detail Progress Per Sistem</h1>
+    <p class="subtitle">Rincian status penyusunan materi dan input aplikasi untuk setiap sistem.</p>
 
+    <!-- Filter Tab Modul -->
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+        <button class="btn btn-primary" onclick="filterDetail('DM')" id="btn-dm">Daftar Masalah (DM)</button>
+        <button class="btn btn-secondary" onclick="filterDetail('DP')" id="btn-dp">Daftar Penyakit (DP)</button>
+        <button class="btn btn-secondary" onclick="filterDetail('DKK')" id="btn-dkk">Keterampilan Klinis (DKK)</button>
+    </div>
+
+    <!-- Grid Tempat Render Detail Sistem -->
+    <div id="detailGrid" class="grid">
+        <!-- Rincian sistem akan ter-render otomatis di sini via JS -->
+    </div>
+</div>
         <!-- 2. Form Harian Page -->
         <div id="logsPage" class="page">
             <h1>Form Laporan Harian</h1>
