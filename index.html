@@ -10,14 +10,15 @@
 <body>
 
     <nav>
-    <button class="nav-btn active" onclick="switchPage(event, 'dashboard')">📊 Dashboard</button>
-    <button class="nav-btn" onclick="switchPage(event, 'detailProgress')">📑 Detail Progress</button>
-    <button class="nav-btn" onclick="switchPage(event, 'logsPage')">📝 Form Harian</button>
-    <button class="nav-btn" onclick="switchPage(event, 'input')">⚙️ Database Utama</button>
-    <button class="nav-btn" onclick="switchPage(event, 'links')">🔗 Dokumen Links</button>
+        <button class="nav-btn active" onclick="switchPage(event, 'dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" onclick="switchPage(event, 'detailProgress')">📑 Detail Progress</button>
+        <button class="nav-btn" onclick="switchPage(event, 'logsPage')">📝 Form Harian</button>
+        <button class="nav-btn" onclick="switchPage(event, 'input')">⚙️ Database Utama</button>
+        <button class="nav-btn" onclick="switchPage(event, 'links')">🔗 Dokumen Links</button>
     </nav>
 
     <div class="container">
+        <!-- 1. DASHBOARD UTAMA -->
         <div id="dashboard" class="page active">
             <h1>Progress MCU Apps Fakultas Kedokteran</h1>
             <p class="subtitle">Data real-time progress penyusunan materi dan input aplikasi.</p>
@@ -66,7 +67,7 @@
                 </div>
             </div>
 
-           <div class="card">
+            <div class="card">
                 <h2>Total Data MCU Apps Fakultas Kedokteran</h2>
                 <div class="grid" style="margin-bottom:0;">
                     <!-- DM Info -->
@@ -99,24 +100,26 @@
                 </div>
             </div>
         </div>
-<!-- Halaman Detail Progress Per Sistem -->
-<div id="detailProgress" class="page">
-    <h1>Detail Progress Per Sistem</h1>
-    <p class="subtitle">Rincian status penyusunan materi dan input aplikasi untuk setiap sistem.</p>
 
-    <!-- Filter Tab Modul -->
-    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
-        <button class="btn btn-primary" onclick="filterDetail('DM')" id="btn-dm">Daftar Masalah (DM)</button>
-        <button class="btn btn-secondary" onclick="filterDetail('DP')" id="btn-dp">Daftar Penyakit (DP)</button>
-        <button class="btn btn-secondary" onclick="filterDetail('DKK')" id="btn-dkk">Keterampilan Klinis (DKK)</button>
-    </div>
+        <!-- 2. HALAMAN DETAIL PROGRESS PER SISTEM -->
+        <div id="detailProgress" class="page">
+            <h1>Detail Progress Per Sistem</h1>
+            <p class="subtitle">Rincian status penyusunan materi dan input aplikasi untuk setiap sistem.</p>
 
-    <!-- Grid Tempat Render Detail Sistem -->
-    <div id="detailGrid" class="grid">
-        <!-- Rincian sistem akan ter-render otomatis di sini via JS -->
-    </div>
-</div>
-        <!-- 2. Form Harian Page -->
+            <!-- Filter Tab Modul -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="filterDetail('DM')" id="btn-dm">Daftar Masalah (DM)</button>
+                <button class="btn btn-secondary" onclick="filterDetail('DP')" id="btn-dp">Daftar Penyakit (DP)</button>
+                <button class="btn btn-secondary" onclick="filterDetail('DKK')" id="btn-dkk">Keterampilan Klinis (DKK)</button>
+            </div>
+
+            <!-- Grid Tempat Render Detail Sistem -->
+            <div id="detailGrid" class="grid">
+                <!-- Rincian sistem akan ter-render otomatis di sini via JS -->
+            </div>
+        </div>
+
+        <!-- 3. FORM HARIAN PAGE -->
         <div id="logsPage" class="page">
             <h1>Form Laporan Harian</h1>
             <p class="subtitle">Rekapan progres kinerja tim secara berkala. Setiap data yang dimasukan akan tersimpan ke database.</p>
@@ -132,12 +135,12 @@
                         <option value="Okta">Okta</option>
                         <option value="Wafa">Wafa</option>
                         <option value="Jannah">Jannah</option>
-                        <option value="Jannah">Araya</option>
-                        <option value="Jannah">Yolanda</option>
-                        <option value="Jannah">Candy</option>
-                        <option value="Jannah">Nazila</option>
-                        <option value="Jannah">Belva</option>
-                        <option value="Jannah">Azwa</option>
+                        <option value="Araya">Araya</option>
+                        <option value="Yolanda">Yolanda</option>
+                        <option value="Candy">Candy</option>
+                        <option value="Nazila">Nazila</option>
+                        <option value="Belva">Belva</option>
+                        <option value="Azwa">Azwa</option>
                     </select>
 
                     <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Kategori Modul</label>
@@ -187,6 +190,7 @@
             </div>
         </div>
 
+        <!-- 4. DATABASE UTAMA PAGE -->
         <div id="input" class="page">
             <div class="card">
                 <h1>Database Utama</h1>
@@ -203,6 +207,7 @@
             </div>
         </div>
 
+        <!-- 5. MASTER DATA LINKS PAGE -->
         <div id="links" class="page">
             <h1>Master Data Repository</h1>
             <p class="subtitle">Akses cepat ke Google Docs materi pembelajaran tim.</p>
@@ -227,30 +232,93 @@
     <div id="toast" class="toast">Data Berhasil Diupdate!</div>
 
     <script>
-        defaultData
+        // Updated Default Data Structure with Presisi Calculation & Detail Items
+        const defaultData = {
+            "progress": {
+                "DM": {
+                    "materi": { "done": 1719, "total": 1854 },
+                    "apps": { "done": 1386, "total": 1854 }
+                },
+                "DP": {
+                    "materi": { "done": 583, "total": 736 },
+                    "apps": { "done": 472, "total": 736 }
+                },
+                "DKK": {
+                    "materi": { "done": 465, "total": 480 },
+                    "apps": { "done": 321, "total": 480 }
+                }
+            },
+            "systemDetails": {
+                "DM": [
+                    { "name": "1. Sistem Saraf & Psikiatri", "materi": "DONE", "apps": "DONE" },
+                    { "name": "2. Sistem Indra", "materi": "DONE", "apps": "DONE" },
+                    { "name": "3. Sistem Respirasi & Kardiovaskular", "materi": "DONE", "apps": "DONE" },
+                    { "name": "4. Sistem Gastrointestinal, Hepatobilier, & Pankreas", "materi": "DONE", "apps": "DONE" },
+                    { "name": "5. Sistem Ginjal & Saluran Kemih", "materi": "DONE", "apps": "DONE" },
+                    { "name": "6. Sistem Reproduksi", "materi": "DONE", "apps": "ON GOING (Bab 18/32)" },
+                    { "name": "7. Sistem Endokrin, Metabolisme, & Nutrisi", "materi": "DONE", "apps": "DONE" },
+                    { "name": "8. Sistem Hematologi & Imunologi", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "9. Sistem Muskuloskeletal", "materi": "ON GOING (Bab 8/10)", "apps": "BELUM" },
+                    { "name": "10. Sistem Integumen", "materi": "ON GOING (Bab 9/21)", "apps": "BELUM" }
+                ],
+                "DP": [
+                    { "name": "1. Sistem Saraf", "materi": "DONE", "apps": "DONE" },
+                    { "name": "2. Sistem Psikiatri", "materi": "DONE", "apps": "DONE" },
+                    { "name": "3. Sistem Indra", "materi": "DONE", "apps": "DONE" },
+                    { "name": "4. Sistem Respirasi", "materi": "DONE", "apps": "DONE" },
+                    { "name": "5. Sistem Kardiovaskular", "materi": "DONE", "apps": "DONE" },
+                    { "name": "6. Sistem Gastrointestinal, Hepatobilier, & Pankreas", "materi": "DONE", "apps": "DONE" },
+                    { "name": "7. Sistem Ginjal & Saluran Kemih", "materi": "DONE", "apps": "DONE" },
+                    { "name": "8. Sistem Reproduksi", "materi": "DONE", "apps": "DONE" },
+                    { "name": "9. Sistem Endokrin, Metabolik, & Nutrisi", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "10. Sistem Hematologi & Imunologi", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "11. Sistem Muskuloskeletal", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "12. Sistem Integumen", "materi": "BELUM", "apps": "BELUM" }
+                ],
+                "DKK": [
+                    { "name": "1. Sistem Saraf", "materi": "DONE", "apps": "DONE" },
+                    { "name": "2. Sistem Psikiatri", "materi": "DONE", "apps": "DONE" },
+                    { "name": "3. Sistem Indra", "materi": "DONE", "apps": "ON GOING (Bab 10/14)" },
+                    { "name": "4. Sistem Respirasi", "materi": "DONE", "apps": "DONE" },
+                    { "name": "5. Sistem Kardiovaskular", "materi": "DONE", "apps": "DONE" },
+                    { "name": "6. Sistem Gastrointestinal, Hepatobilier, & Pankreas", "materi": "DONE", "apps": "DONE" },
+                    { "name": "7. Sistem Ginjal & Saluran Kemih", "materi": "DONE", "apps": "DONE" },
+                    { "name": "8. Sistem Reproduksi", "materi": "ON GOING (Sub-bab IMD)", "apps": "ON GOING (USG Obsgin)" },
+                    { "name": "9. Sistem Endokrin, Metabolisme, & Nutrisi", "materi": "DONE", "apps": "DONE" },
+                    { "name": "10. Sistem Hematologi & Imunologi", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "11. Sistem Muskuloskeletal", "materi": "DONE", "apps": "BELUM" },
+                    { "name": "12. Sistem Integumen", "materi": "DONE", "apps": "BELUM" }
+                ]
+            },
+            "logs": []
+        };
 
         let appData = {};
+        let currentDetailCategory = 'DM';
 
         // Core Initialization
         function initApp() {
             let savedData = localStorage.getItem('medicalModuleProgress');
             appData = savedData ? JSON.parse(savedData) : defaultData;
             
-            // Ensure old data structures are migrated to new one
+            // Migration check
             if (!appData.progress) {
-                appData = { progress: appData, logs: [] };
+                appData = { progress: appData, systemDetails: defaultData.systemDetails, logs: [] };
+            }
+            if (!appData.systemDetails) {
+                appData.systemDetails = defaultData.systemDetails;
             }
 
             refreshAllUI();
-            // Set default tanggal input ke hari ini
             document.getElementById('logManualDate').value = new Date().toISOString().split('T')[0];
         }
 
-        // UI Refresh
+        // UI Refresh All
         function refreshAllUI() {
             document.getElementById('jsonInput').value = JSON.stringify(appData, null, 4);
             updateDashboard(appData.progress);
             renderTimeline(appData.logs);
+            renderDetailGrid();
         }
 
         // Update Dashboard Cards
@@ -271,6 +339,52 @@
             });
         }
 
+        // Detail Progress Render & Filter
+        function filterDetail(category) {
+            currentDetailCategory = category;
+            ['dm', 'dp', 'dkk'].forEach(c => {
+                const btn = document.getElementById(`btn-${c}`);
+                if (c === category.toLowerCase()) {
+                    btn.className = 'btn btn-primary';
+                } else {
+                    btn.className = 'btn btn-secondary';
+                }
+            });
+            renderDetailGrid();
+        }
+
+        function renderDetailGrid() {
+            const grid = document.getElementById('detailGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            
+            const details = (appData.systemDetails && appData.systemDetails[currentDetailCategory]) 
+                            ? appData.systemDetails[currentDetailCategory] 
+                            : defaultData.systemDetails[currentDetailCategory];
+
+            details.forEach(sys => {
+                const getBadge = (status) => {
+                    if (status === 'DONE') return '<span style="background:#dcfce7; color:#166534; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.75rem; font-weight:bold;">🟢 DONE</span>';
+                    if (status === 'BELUM') return '<span style="background:#fee2e2; color:#991b1b; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.75rem; font-weight:bold;">🔴 BELUM</span>';
+                    return `<span style="background:#fef3c7; color:#92400e; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.75rem; font-weight:bold;">🟡 ${status}</span>`;
+                };
+
+                grid.innerHTML += `
+                    <div class="card" style="margin-bottom:0;">
+                        <h3 style="font-size:1rem; margin-bottom:0.75rem; color:var(--text-main);">${sys.name}</h3>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:0.85rem;">
+                            <span>📖 Materi:</span>
+                            ${getBadge(sys.materi)}
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
+                            <span>📲 Input Apps:</span>
+                            ${getBadge(sys.apps)}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
         // Render Timeline Logs
         function renderTimeline(logsData) {
             const container = document.getElementById('timelineContainer');
@@ -282,7 +396,6 @@
             }
 
             const sortedLogs = [...logsData].sort((a, b) => b.timestamp - a.timestamp);
-
             const groupedLogs = {};
             sortedLogs.forEach(log => {
                 if (!groupedLogs[log.date]) {
